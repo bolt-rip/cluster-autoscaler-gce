@@ -94,9 +94,10 @@ func (gce *GceCloudProvider) NodeGroupForNode(node *apiv1.Node) (cloudprovider.N
 	ref, err := GceRefFromProviderId(node.Spec.ProviderID)
 	if err != nil {
 		klog.Errorf("Error extracting node.Spec.ProviderID for node %v: %v", node.Name, err)
-		return nil, err
+		return nil, nil
 	}
 	mig, err := gce.gceManager.GetMigForInstance(ref)
+	klog.Infof("Extracting mig for node %v: %v - %v", node.Name, err, mig)
 	return mig, err
 }
 
